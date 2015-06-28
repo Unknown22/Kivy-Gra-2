@@ -46,7 +46,7 @@ class Intro(Widget):
     czas_trwania = NumericProperty(0)
 
     def pokaz_intro(self, dodge):
-        if self.czas_trwania < 1 * 60:
+        if self.czas_trwania < 4 * 60:
             self.size = (dodge.width, dodge.height)
             self.czas_trwania += 1
         else:
@@ -255,13 +255,8 @@ class DodgeGame(Widget):
             self.pozycja_rekord_x = self.width * 4/5
             self.pozycja_rekord_top = self.top
             self.rekord_font_size = 30
-            if self.czy_poczatek:
-                self.ball.pozycja_x = self.center_x - self.ball.width/2
-                self.ball.pozycja_y = self.center_y * 1/10
-                self.czy_poczatek = 0
-            #self.ball.score += 1
 
-            if self.ball.score > self.prog_przyspieszenia and self.poziom_przyspieszenia < 18:
+            if self.ball.score > self.prog_przyspieszenia and self.poziom_przyspieszenia < 15:
                 self.poziom_przyspieszenia += 1
                 self.prog_przyspieszenia += 2000 * self.poziom_przyspieszenia
                 self.magnes1.przyspiesz()
@@ -352,6 +347,7 @@ class DodgeGame(Widget):
         self.pozycja_rekord_x = self.width * 1/2
         self.pozycja_rekord_top = self.height * 1/3
         self.ball.center_x = -1000
+
 class DodgeApp(App):
     def build(self):
         game = DodgeGame()
