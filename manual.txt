@@ -1,0 +1,18 @@
+Dodge
+
+1. Sterowanie
+2. Cel gry
+3. Ustawienia poziomu trudnoœci
+
+#1
+Elektronem sterujemy naciskaj¹c na ekran. W zale¿noœci od tego, po której stronie naciœniemy ekran, elektron przesunie siê w prawo lub w lewo.
+
+#2
+Celem gry jest przelecienie elektronem jak najwiêkszej odleg³oœci.
+Elektron z czasem przyspiesza jak w synchrotronie.
+Naszym celem jest równie¿ unikanie magnesów, które zagradzaj¹ nam drogê.
+
+#3
+Mo¿emy wybraæ poziom trudnoœci, w zale¿noœci od poziomu trudnoœci zmienia siê czêstotliwoœæ przyspieszania
+Gra bazowo jest ustawiona na poziom œredni.
+Zak³adaj¹c, ¿e tempo przyspieszania na poziomie ³atwym wynosi: 1, to na poziomie œrednim jest ono 2x szybsze a na poziomie trudnym 3x szybsze
