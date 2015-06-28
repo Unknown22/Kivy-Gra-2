@@ -1,0 +1,168 @@
+<Magnes>:
+    #magnet_image: image_magnes
+    canvas:
+        Rectangle:
+            source: 'images/magnet.png'
+            pos: self.pos
+            size: self.width, self.height
+
+<Intro>:
+    canvas:
+        Rectangle:
+            source: 'images/solarispionowe720.png'
+            pos: self.pos
+            size: self.width, self.height
+
+<LogoGry>:
+    canvas:
+        Rectangle:
+            id: logo_game
+            source: 'images/logo.png'
+            pos: root.pozycja_x_logo, root.pozycja_y_logo
+            size: root.rozmiar_szerokosc_logo, root.rozmiar_wysokosc_logo
+
+
+<Menu>:
+    Button:
+        id: button1
+        background_color: 0,1,0,1
+        text: "START"
+        pos: root.pozycja_x, root.pozycja_y
+        size: root.rozmiar_szerokosc, root.rozmiar_wysokosc
+        on_release: root.wystartuj_gre()
+
+    Button:
+        id: button2
+        background_color: 1,1,1,1
+        text: "WYBIERZ POZIOM TRUDNOSCI"
+        pos: root.pozycja_x_wybor_trudnosci, root.pozycja_y_wybor_trudnosci
+        size: root.rozmiar_szerokosc_wybor_trudnosci, root.rozmiar_wysokosc_wybor_trudnosci
+        on_release: root.pokaz_wybierz_poziom_menu()
+
+
+    Button:
+        id: button_trudnosc_1
+        background_color: 0,1,0,1
+        text: "LATWY"
+        pos: root.pozycja_x_latwy, root.pozycja_y_latwy
+        size: root.rozmiar_szerokosc_latwy, root.rozmiar_wysokosc_latwy
+        on_release: root.wybierz_poziom(1)
+    Button:
+        id: button_trudnosc_2
+        background_color: 1,1,0,1
+        text: "SREDNI"
+        pos: root.pozycja_x_sredni, root.pozycja_y_sredni
+        size: root.rozmiar_szerokosc_sredni, root.rozmiar_wysokosc_sredni
+        on_release: root.wybierz_poziom(2)
+    Button:
+        id: button_trudnosc_3
+        background_color: 1,0,0,1
+        text: "TRUDNY"
+        pos: root.pozycja_x_trudny, root.pozycja_y_trudny
+        size: root.rozmiar_szerokosc_trudny, root.rozmiar_wysokosc_trudny
+        on_release: root.wybierz_poziom(3)
+
+<Electron>:
+    size: 50, 50
+    canvas:
+        Ellipse:
+            source: "images/electron.png"
+            pos: self.pos
+            size: self.size
+
+<DodgeGame>:
+    intro_logo: logo
+    logo_gra: logo_game
+    przycisk1: button1
+    przycisk2: button2
+    przycisk_poziom_trudnosci1: button_trudnosc_1
+    przycisk_poziom_trudnosci2: button_trudnosc_2
+    przycisk_poziom_trudnosci3: button_trudnosc_3
+
+
+    magnes1: przeszkoda1
+    magnes2: przeszkoda2
+    magnes3: przeszkoda3
+
+    ball: race_electron
+    button_lewy_ekran: button_lewa_strona
+    button_prawy_ekran: button_prawa_strona
+
+    canvas:
+        Rectangle:
+            pos: root.pozycja_linii_srodka, 0
+            size: 1, self.height
+
+    Label:
+        font_size: 50
+        center_x: root.pozycja_dystans
+        top: root.top - 50
+        text: "Dystans: " + str(root.ball.score)
+
+    Label:
+        font_size: root.rekord_font_size
+        center_x: root.pozycja_rekord_x
+        top: root.pozycja_rekord_top
+        text: "Rekord: " + str(root.ball.record)
+
+    Label:
+        font_size: 30
+        center_x: root.pozycja_liczba_zyc
+        top: root.top
+        text: "Liczba zyc: " + str(root.ball.life)
+
+    Electron:
+        id: race_electron
+
+    Intro:
+        id: logo
+
+    Menu:
+        id: button1
+
+    Menu:
+        id: button2
+
+    LogoGry:
+        id: logo_game
+
+    Menu:
+        id: button_trudnosc_1
+
+    Menu:
+        id: button_trudnosc_2
+
+    Menu:
+        id: button_trudnosc_3
+
+
+    Magnes:
+        id: przeszkoda1
+        x: -100
+
+    Magnes:
+        id: przeszkoda2
+        x: -100
+
+    Magnes:
+        id: przeszkoda3
+        x: -100
+
+
+    Button:
+        id: button_lewa_strona
+        opacity: 0
+        background_color: 0,0,0,0
+        pos: root.pozycja_x_lewa_strona, 0
+        size: root.width/2, root.height
+        on_press: root.dotyk_down_lewy()
+        on_release: root.dotyk_up_lewy()
+
+    Button:
+        id: button_prawa_strona
+        opacity: 0
+        background_color: 0,0,0,0
+        pos: root.pozycja_x_prawa_strona, 0
+        size: root.width/2, root.height
+        on_press: root.dotyk_down_prawy()
+        on_release: root.dotyk_up_prawy()

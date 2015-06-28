@@ -1,0 +1,3 @@
+title=Dodge Game
+author=Marcin Migda
+orientation=portrait
