@@ -6,6 +6,10 @@ from kivy.vector import Vector
 from kivy.clock import Clock
 import random
 
+'''
+Klasa odpowiedzialna za spadajace magnesy
+'''
+
 class Magnes(Widget):
     narysowany = NumericProperty(0)
     velocity_x = NumericProperty(0)
@@ -16,22 +20,30 @@ class Magnes(Widget):
     pozycja = ReferenceListProperty(pozycja_x, pozycja_y)
     #magnet_image = ObjectProperty(Image())
 
-
+    '''
+    Metoda przyspieszajaca magnesy
+    '''
     def przyspiesz(self):
         self.velocity_y -= 1
-
+    '''
+    Metoda ktora czysci ekran po zderzeniu
+    '''
     def wyczysc(self, race):
         self.narysowany = 0
         self.pos = (random.randrange(race.width - self.width),race.height)
         self.velocity_y = -3
-
+    '''
+    Metoda obslugujaca zderzenie
+    '''
     def zderzenie(self, ball, race):
         if self.collide_widget(ball):
             self.narysowany = 0
             self.pos = (random.randrange(race.width - self.width),race.height)
             self.velocity_y = -3
             return True
-
+    '''
+    Metoda przesuwajaca magnesy
+    '''
     def move_obstacle(self, race):
         if self.narysowany == 0:
             self.pos = (random.randrange(race.width - self.width), race.height)
@@ -42,6 +54,9 @@ class Magnes(Widget):
         if self.pozycja_y + self.height < 0:
             self.narysowany = 0
 
+'''
+Klasa odpowiedzialna za wyswietlanie poczatkowego intra
+'''
 class Intro(Widget):
     czas_trwania = NumericProperty(0)
 
@@ -53,6 +68,9 @@ class Intro(Widget):
             self.pos = (-2000, -2000)
             dodge.etap_menu = 1
 
+'''
+Klasa odpowiedzialna za wyswietlanie loga gry nad przyciskami w glownym menu
+'''
 class LogoGry(Widget):
     pozycja_x_logo = NumericProperty(-500)
     pozycja_y_logo = NumericProperty(-500)
@@ -71,6 +89,9 @@ class LogoGry(Widget):
         self.pozycja_x_logo = -500
         self.pozycja_y_logo = -500
 
+'''
+Klasa odpowiedzialna za obsluge calego menu
+'''
 class Menu(Widget):
 
     ekran_height = NumericProperty(0)
@@ -105,46 +126,67 @@ class Menu(Widget):
     rozmiar_szerokosc_trudny = NumericProperty(0)
     rozmiar_wysokosc_trudny = NumericProperty(0)
 
+    gra = ObjectProperty(None)
 
+    '''
+    Metoda pokazujaca menu
+    '''
     def pokaz_menu(self, dodge):
         #self.opacity -= 0.1
+        self.gra = dodge
+        self.ekran_height = self.gra.height
+        self.ekran_width = self.gra.width
 
-        self.ekran_height = dodge.height
-        self.ekran_width = dodge.width
+        self.rozmiar_szerokosc = self.gra.width * 0.8
+        self.rozmiar_wysokosc = self.gra.height * 0.2
+        self.pozycja_x = self.gra.width * 0.2 / 2
+        self.pozycja_y = self.gra.height - self.gra.height * 0.2 - self.rozmiar_wysokosc
 
-        self.rozmiar_szerokosc = dodge.width * 0.8
-        self.rozmiar_wysokosc = dodge.height * 0.2
-        self.pozycja_x = dodge.width * 0.2 / 2
-        self.pozycja_y = dodge.height - dodge.height * 0.2 - self.rozmiar_wysokosc
-
-        self.rozmiar_szerokosc_wybor_trudnosci = dodge.width * 0.8
-        self.rozmiar_wysokosc_wybor_trudnosci = dodge.height * 0.2
+        self.rozmiar_szerokosc_wybor_trudnosci = self.gra.width * 0.8
+        self.rozmiar_wysokosc_wybor_trudnosci = self.gra.height * 0.2
         self.pozycja_x_wybor_trudnosci = self.pozycja_x
         self.pozycja_y_wybor_trudnosci = self.pozycja_y - self.rozmiar_wysokosc_wybor_trudnosci - self.rozmiar_wysokosc_wybor_trudnosci * 0.1
 
+    '''
+    Metoda wywolujaca start gry
+    '''
     def wystartuj_gre(self):
-        DodgeGame.etap_menu = 3
-        self.rozmiar_szerokosc = 0
-        self.rozmiar_wysokosc = 0
+        self.gra.etap_menu = 3
+        #self.rozmiar_szerokosc = 0
+        #self.rozmiar_wysokosc = 0
         self.pozycja_x = -2000
         self.pozycja_y = -2000
 
         self.pozycja_x_wybor_trudnosci = -2000
         self.pozycja_y_wybor_trudnosci = -2000
-        self.rozmiar_szerokosc_wybor_trudnosci = 0
-        self.rozmiar_wysokosc_wybor_trudnosci = 0
+        #self.rozmiar_szerokosc_wybor_trudnosci = 0
+        #self.rozmiar_wysokosc_wybor_trudnosci = 0
 
+        self.pozycja_x_latwy = -2000
+        self.pozycja_y_latwy = -2000
+        self.pozycja_x_sredni = -2000
+        self.pozycja_y_sredni = -2000
+        self.pozycja_x_trudny = -2000
+        self.pozycja_y_trudny = -2000
+
+    '''
+    Metoda pokazujaca poziomy trudnosci
+    '''
     def pokaz_wybierz_poziom_menu(self):
-        DodgeGame.etap_menu = 2
+        self.gra.etap_menu = 2
+        self.gra.pozycja_rekord_top = -1000
 
+    '''
+    Metoda wyswietlajaca przyciski do wyboru trudnosci
+    '''
     def pokaz_wybierz_poziom(self):
-        self.rozmiar_szerokosc = 0
-        self.rozmiar_wysokosc = 0
+        #self.rozmiar_szerokosc = 0
+        #self.rozmiar_wysokosc = 0
         self.pozycja_x = -2000
         self.pozycja_y = -2000
 
-        self.rozmiar_szerokosc_wybor_trudnosci = 0
-        self.rozmiar_wysokosc_wybor_trudnosci = 0
+        #self.rozmiar_szerokosc_wybor_trudnosci = 0
+        #self.rozmiar_wysokosc_wybor_trudnosci = 0
         self.pozycja_x_wybor_trudnosci = -2000
         self.pozycja_y_wybor_trudnosci = -2000
 
@@ -166,28 +208,32 @@ class Menu(Widget):
         self.pozycja_y_trudny = self.pozycja_y_sredni -self.rozmiar_wysokosc_trudny - self.ekran_height * 0.05
 
 
+    '''
+    Metoda wybierajaca poziom
+    '''
     def wybierz_poziom(self, trudnosc):
-        DodgeGame.poziom_trudnosci = trudnosc
-        DodgeGame.etap_menu = 1
+        self.gra.poziom_trudnosci = trudnosc
+        self.gra.etap_menu = 1
+        self.gra.pozycja_rekord_top = self.gra.height * 1/3
 
 
         """
         Przyciski do ustawiania poziomu trudnosci
         """
-        self.rozmiar_szerokosc_latwy = 0
-        self.rozmiar_wysokosc_latwy = 0
+        #self.rozmiar_szerokosc_latwy = 0
+        #self.rozmiar_wysokosc_latwy = 0
         self.pozycja_x_latwy = -2000
         self.pozycja_y_latwy = -2000
 
 
-        self.rozmiar_szerokosc_sredni = 0
-        self.rozmiar_wysokosc_sredni = 0
+        #self.rozmiar_szerokosc_sredni = 0
+        #self.rozmiar_wysokosc_sredni = 0
         self.pozycja_x_sredni = -2000
         self.pozycja_y_sredni = -2000
 
 
-        self.rozmiar_szerokosc_trudny = 0
-        self.rozmiar_wysokosc_trudny = 0
+        #self.rozmiar_szerokosc_trudny = 0
+        #self.rozmiar_wysokosc_trudny = 0
         self.pozycja_x_trudny = -2000
         self.pozycja_y_trudny = -2000
 
@@ -319,7 +365,7 @@ class DodgeGame(Widget):
                     self.poziom_przyspieszenia = 0
                     self.prog_przyspieszenia = 500
                     self.ball.life = 2
-                    self.etap_menu = 1
+                    #self.etap_menu = 1
                     self.ukryj_gre()
 
 
@@ -347,6 +393,7 @@ class DodgeGame(Widget):
         self.pozycja_rekord_x = self.width * 1/2
         self.pozycja_rekord_top = self.height * 1/3
         self.ball.center_x = -1000
+        self.etap_menu = 1
 
 class DodgeApp(App):
     def build(self):
