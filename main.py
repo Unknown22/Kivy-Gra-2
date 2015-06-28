@@ -205,7 +205,7 @@ class DodgeGame(Widget):
     przycisk_poziom_trudnosci1 = ObjectProperty(None)
     przycisk_poziom_trudnosci2 = ObjectProperty(None)
     przycisk_poziom_trudnosci3 = ObjectProperty(None)
-    poziom_trudnosci = NumericProperty(1)
+    poziom_trudnosci = NumericProperty(2)
     ball = ObjectProperty(None)
     czy_poczatek = NumericProperty(1)
     licznik = NumericProperty(0)
@@ -258,7 +258,7 @@ class DodgeGame(Widget):
 
             if self.ball.score > self.prog_przyspieszenia and self.poziom_przyspieszenia < 15:
                 self.poziom_przyspieszenia += 1
-                self.prog_przyspieszenia += 2000 * self.poziom_przyspieszenia
+                self.prog_przyspieszenia += self.poziom_trudnosci * 1000 * self.poziom_przyspieszenia
                 self.magnes1.przyspiesz()
                 self.magnes2.przyspiesz()
                 self.magnes3.przyspiesz()
